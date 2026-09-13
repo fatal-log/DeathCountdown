@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S Y S T E M :: F A T E</title>
+    <title>ساعة الفناء - Death Countdown</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Tajawal:wght@500;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Tajawal:wght@700;900&display=swap');
 
         * {
             margin: 0;
@@ -15,8 +15,8 @@
         }
 
         body {
-            background-color: #030101;
-            color: #b30000;
+            background-color: #000;
+            color: #ff0000;
             font-family: 'Tajawal', sans-serif;
             display: flex;
             justify-content: center;
@@ -26,141 +26,150 @@
             position: relative;
         }
 
-        /* شاشة الضوضاء والحبيبات (Vignette & Noise Screen) */
-        .scanline {
+        /* خلفية حمراء مرعبة مع إضاءة خافتة وضباب خافق */
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(120, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.98) 80%);
+            z-index: 1;
+        }
+
+        /* خطوط الشاشات التلفزيونية القديمة */
+        .scanlines {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), 
-                        radial-gradient(circle, rgba(130, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 85%);
-            background-size: 100% 4px, 100% 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+            background-size: 100% 4px;
             z-index: 2;
             pointer-events: none;
         }
 
-        /* خلفية الضباب الخافق */
-        .ambient-pulse {
-            position: fixed;
-            width: 150vw;
-            height: 150vh;
-            background: radial-gradient(circle, rgba(150, 0, 0, 0.12) 0%, rgba(0, 0, 0, 1) 70%);
-            animation: breathe 8s infinite alternate ease-in-out;
-            z-index: 1;
+        /* الجماجم في الجوانب مع تأثير النبض */
+        .skull {
+            position: absolute;
+            font-size: 4.5rem;
+            opacity: 0.25;
+            z-index: 2;
+            filter: drop-shadow(0 0 15px #ff0000);
+            animation: pulse 2.5s infinite alternate ease-in-out;
+        }
+        .top-left { top: 20px; left: 20px; }
+        .top-right { top: 20px; right: 20px; }
+        .bottom-left { bottom: 20px; left: 20px; }
+        .bottom-right { bottom: 20px; right: 20px; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.2; }
+            100% { transform: scale(1.12); opacity: 0.5; filter: drop-shadow(0 0 25px #ff0000); }
         }
 
-        @keyframes breathe {
-            0% { transform: scale(1); opacity: 0.4; }
-            100% { transform: scale(1.15); opacity: 0.8; }
-        }
-
-        /* الإطار الرئيسي */
+        /* إطار الحاوية الرئيسي */
         .container {
             position: relative;
             z-index: 3;
-            width: 92%;
-            max-width: 440px;
-            padding: 40px 30px;
-            border: 1px solid rgba(139, 0, 0, 0.4);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 15px rgba(100, 0, 0, 0.2);
-            background: rgba(4, 2, 2, 0.96);
-            border-radius: 4px;
+            width: 90%;
+            max-width: 480px;
+            padding: 35px 25px;
+            border: 2px solid #660000;
+            box-shadow: 0 0 45px rgba(255, 0, 0, 0.4), inset 0 0 20px rgba(255, 0, 0, 0.25);
+            background: rgba(5, 0, 0, 0.94);
+            border-radius: 12px;
             text-align: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .sys-id {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.65rem;
-            color: #4a0d0d;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
         }
 
         h1 {
-            font-family: 'Tajawal', sans-serif;
-            font-weight: 900;
-            font-size: 2.2rem;
-            color: #d90429;
+            font-family: 'Creepster', 'Tajawal', cursive;
+            font-size: 3rem;
+            color: #ff0000;
             letter-spacing: 2px;
-            text-shadow: 0 0 8px rgba(217, 4, 41, 0.6);
-            margin-bottom: 8px;
+            text-shadow: 0 0 15px #ff0000, 0 0 30px #800000;
+            margin-bottom: 5px;
         }
 
         p.subtitle {
-            color: #5a5a5a;
-            font-size: 0.8rem;
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
         }
 
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: right;
         }
 
         label {
             display: block;
-            font-size: 0.75rem;
-            color: #7a2828;
+            font-size: 0.9rem;
+            color: #d1d1d1;
             margin-bottom: 8px;
-            letter-spacing: 1px;
-            font-family: 'Share Tech Mono', 'Tajawal';
         }
 
         input {
             width: 100%;
-            padding: 14px 12px;
-            background: #000000;
-            border: 1px solid #330d0d;
-            color: #e6e6e6;
-            font-size: 1rem;
-            border-radius: 2px;
+            padding: 14px;
+            background: #0d0000;
+            border: 1px solid #550000;
+            color: #fff;
+            font-size: 1.1rem;
+            border-radius: 6px;
             outline: none;
             text-align: center;
-            transition: all 0.4s ease;
-            font-family: 'Tajawal', sans-serif;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.8);
+            transition: 0.3s;
         }
 
         input:focus {
-            border-color: #8b0000;
-            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
 
         button {
             width: 100%;
             padding: 16px;
-            background: #4a0000;
-            color: #cccccc;
-            border: 1px solid #660000;
-            font-size: 0.95rem;
-            font-weight: 800;
-            letter-spacing: 1px;
+            background: linear-gradient(180deg, #990000 0%, #4a0000 100%);
+            color: #fff;
+            border: 1px solid #ff0000;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
-            border-radius: 2px;
+            border-radius: 6px;
+            margin-top: 10px;
+            text-shadow: 0 0 5px #000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
             transition: 0.3s;
         }
 
         button:hover {
-            background: #800000;
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(128, 0, 0, 0.6);
+            background: linear-gradient(180deg, #cc0000 0%, #660000 100%);
+            box-shadow: 0 0 30px #ff0000;
         }
 
-        /* شاشة التزامن والتحميل السوداوية */
+        /* شاشة التحميل المرعبة */
         .loading-screen {
             display: none;
             padding: 20px 0;
         }
 
-        .terminal-logs {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.7rem;
-            color: #801a1a;
-            text-align: left;
-            direction: ltr;
-            margin-top: 15px;
-            line-height: 1.6;
-            min-height: 60px;
+        .skull-loader {
+            font-size: 4rem;
+            animation: rotateSkull 1.2s infinite ease-in-out;
+            margin-bottom: 15px;
+        }
+
+        @keyframes rotateSkull {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.25); opacity: 1; filter: drop-shadow(0 0 25px #ff0000); }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+
+        .loading-status {
+            color: #ff3333;
+            font-size: 1rem;
+            min-height: 24px;
+            font-weight: bold;
         }
 
         /* شاشة العداد */
@@ -168,23 +177,29 @@
             display: none;
         }
 
-        .victim-name {
+        .user-title {
             color: #ffffff;
-            font-weight: 800;
             font-size: 1.2rem;
-            border-bottom: 1px solid #4a0d0d;
-            padding-bottom: 8px;
-            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .victim-name {
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 0 0 12px #ff0000;
         }
 
         .timer-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
-            margin: 30px 0 20px 0;
+            gap: 8px;
+            margin: 25px 0;
             background: #000000;
-            padding: 18px 8px;
-            border: 1px solid #2a0000;
+            padding: 15px 8px;
+            border: 1px solid #ff0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            border-radius: 6px;
         }
 
         .time-box {
@@ -194,72 +209,77 @@
         }
 
         .time-number {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1.6rem;
-            color: #d90429;
-            text-shadow: 0 0 6px rgba(217, 4, 41, 0.5);
+            font-family: 'Creepster', monospace;
+            font-size: 1.8rem;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
         }
 
         .time-label {
-            font-size: 0.65rem;
-            color: #444;
-            margin-top: 6px;
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 4px;
         }
 
-        .warning-footer {
-            color: #3d3d3d;
-            font-size: 0.7rem;
-            margin-top: 20px;
-            letter-spacing: 0.5px;
+        .warning-text {
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: 15px;
             line-height: 1.4;
         }
 
+        /* تنبيه الحظر والتحايل المرعب */
         .cheat-warning {
             color: #ff3333;
-            font-size: 0.75rem;
-            background: rgba(40, 0, 0, 0.6);
-            border: 1px solid #660000;
-            padding: 10px;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px dashed #ff0000;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             display: none;
-            text-align: right;
             line-height: 1.5;
+            text-align: right;
         }
     </style>
 </head>
 <body>
 
-    <div class="scanline"></div>
-    <div class="ambient-pulse"></div>
+    <div class="background-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- الجماجم الجانبية -->
+    <div class="skull top-left">☠️</div>
+    <div class="skull top-right">💀</div>
+    <div class="skull bottom-left">💀</div>
+    <div class="skull bottom-right">☠️</div>
 
     <div class="container">
-        <div class="sys-id">LOC_NODE :: <span id="node-id">FETCHING...</span></div>
-
         <!-- شاشة الإدخال -->
         <div id="form-screen">
-            <h1>ســجّـل الفــنـاء</h1>
-            <p class="subtitle">أدخل هويتك الكاملة لتحديد النقطة الزمنية المقدرة</p>
+            <h1>ساعة الفناء</h1>
+            <p class="subtitle">سجل اسمك لمعرفة تاريخ نهايتك المحتومة...</p>
             
             <div id="cheatWarning" class="cheat-warning"></div>
 
             <div class="input-group">
-                <label>> الاسم الكامل للمستهدف:</label>
-                <input type="text" id="fullName" placeholder="الاسم هنا..." autocomplete="off" spellcheck="false">
+                <label>الاسم الكامل:</label>
+                <input type="text" id="fullName" placeholder="أدخل اسمك هنا..." required autocomplete="off">
             </div>
 
-            <button onclick="processEntry()">بدء الحساب التنازلي</button>
+            <button onclick="processEntry()">كشف السجل الأسود</button>
         </div>
 
-        <!-- شاشة التزامن العميقة -->
+        <!-- شاشة التحميل والترقب -->
         <div id="loading-screen" class="loading-screen">
-            <p style="color: #a00000; font-size: 0.85rem; letter-spacing: 1px;">جاري تحليل البصمة وتعيين الأجل...</p>
-            <div class="terminal-logs" id="terminal-logs"></div>
+            <div class="skull-loader">☠️</div>
+            <p id="loadingStatus" class="loading-status">جاري سحب بياناتك وحساب الأجل...</p>
         </div>
 
-        <!-- شاشة العداد -->
+        <!-- شاشة العداد التنازلي -->
         <div id="result-screen" class="result-screen">
-            <p style="color: #5a5a5a; font-size: 0.75rem; margin-bottom: 5px;">تم قفل القيد على الكيان:</p>
-            <div id="displayName" class="victim-name"></div>
+            <p class="user-title">مرحباً <span id="displayName" class="victim-name"></span></p>
+            <p style="color: #aaa; font-size: 0.85rem; margin-top: 5px;">الوقت المتبقي لوفاتك في هذا العالم:</p>
 
             <div class="timer-grid">
                 <div class="time-box">
@@ -284,25 +304,22 @@
                 </div>
             </div>
 
-            <p class="warning-footer">تم تسجيل البصمة وتثبيتها محلياً.<br>البيانات المحددة لا يمكن تعديلها أو تجاوزها.</p>
+            <p class="warning-text">تم تثبيت مصيرك الموحش وتوثيق بصمة جهازك.<br>لا يمكن تغييره أو الهروب منه.</p>
         </div>
     </div>
 
     <script>
-        // توليد معرف عشوائي خيالي للسيرفر في أعلى الشاشة
-        document.getElementById('node-id').innerText = Math.random().toString(36).substring(2, 9).toUpperCase();
-
         window.onload = function() {
-            // كشف الوضع الخفي / Incognito Mode
+            // كشف التصفح الخفي بنص عربي مرعب
             const isIncognito = !window.indexedDB || navigator.webdriver;
             if (isIncognito) {
                 const warningBox = document.getElementById('cheatWarning');
-                warningBox.innerText = "[تنبيه النظام]: محاولة التخفي بالوضع الخفي لن تمحو السجل... البصمة الفيزيائية للجهاز مسجلة.";
+                warningBox.innerHTML = "⚠️ <b>تحذير:</b> محاولة التخفي بالوضع الخفي لن تنقذك من السجل الأسود... لقد تم تعقب بصمة جهازك الحقيقية بالفعل!";
                 warningBox.style.display = 'block';
             }
 
-            const registeredName = localStorage.getItem('sys_fate_victim');
-            const registeredTime = localStorage.getItem('sys_fate_time');
+            const registeredName = localStorage.getItem('registered_victim_name');
+            const registeredTime = localStorage.getItem('registered_victim_time');
 
             if (registeredName && registeredTime) {
                 showResult(registeredName, parseInt(registeredTime));
@@ -312,50 +329,49 @@
         function processEntry() {
             const inputName = document.getElementById('fullName').value.trim();
             if (!inputName) {
-                alert('يتطلب النظام إدخال الاسم كاملاً.');
+                alert('الرجاء إدخال اسمك أولاً!');
                 return;
             }
 
-            const registeredName = localStorage.getItem('sys_fate_victim');
-            const registeredTime = localStorage.getItem('sys_fate_time');
+            const registeredName = localStorage.getItem('registered_victim_name');
+            const registeredTime = localStorage.getItem('registered_victim_time');
 
-            // إذا حاول تغيير اسمه من نفس المتصفح
+            // نظام كشف التلاعب عند محاولة تغيير الاسم
             if (registeredName) {
                 const warningBox = document.getElementById('cheatWarning');
-                warningBox.innerText = `[خطأ الوصول]: تم تثبيت السجل مسبقاً باسم (${registeredName}). لا يمكنك تغيير المقدر.`;
+                warningBox.innerHTML = `⚠️ لقد استخدمت الاسم (<b>${registeredName}</b>) من قبل وتم إثبات مصيرك! لا يمكنك استخدام اسم غيرك أو التحايل على النظام.`;
                 warningBox.style.display = 'block';
 
                 setTimeout(() => {
                     showResult(registeredName, parseInt(registeredTime));
-                }, 2200);
+                }, 2500);
                 return;
             }
 
-            // بدء التحميل وسرد السطور التفاعلية (Terminal Simulation)
+            // التسجيل لأول مرة مع نصوص تحميل سوداوية متغيرة
             document.getElementById('form-screen').style.display = 'none';
             document.getElementById('loading-screen').style.display = 'block';
 
-            const logs = [
-                "> Extracting hardware attributes...",
-                "> Locking CPU core frequency...",
-                "> Analyzing biological variance...",
-                "> Synchronizing temporal limit..."
+            const statusMessages = [
+                "جاري سحب بيانات الجهاز والنبض...",
+                "تحليل السجل الحيوي والمكان...",
+                "تحديد التاريخ واللحظة الأخيرة..."
             ];
-            
-            let logIndex = 0;
-            const logContainer = document.getElementById('terminal-logs');
-            
-            const logInterval = setInterval(() => {
-                if(logIndex < logs.length) {
-                    logContainer.innerHTML += logs[logIndex] + "<br>";
-                    logIndex++;
+
+            let msgIndex = 0;
+            const statusElement = document.getElementById('loadingStatus');
+
+            const statusInterval = setInterval(() => {
+                msgIndex++;
+                if (msgIndex < statusMessages.length) {
+                    statusElement.innerText = statusMessages[msgIndex];
                 } else {
-                    clearInterval(logInterval);
+                    clearInterval(statusInterval);
                 }
-            }, 750);
+            }, 1000);
 
             setTimeout(() => {
-                const randomYears = Math.floor(Math.random() * 40) + 1;
+                const randomYears = Math.floor(Math.random() * 45) + 2;
                 const randomDays = Math.floor(Math.random() * 365);
                 const randomHours = Math.floor(Math.random() * 24);
                 const randomMinutes = Math.floor(Math.random() * 60);
@@ -368,11 +384,11 @@
 
                 const targetTimeStamp = futureDate.getTime();
 
-                localStorage.setItem('sys_fate_victim', inputName);
-                localStorage.setItem('sys_fate_time', targetTimeStamp);
+                localStorage.setItem('registered_victim_name', inputName);
+                localStorage.setItem('registered_victim_time', targetTimeStamp);
 
                 showResult(inputName, targetTimeStamp);
-            }, 3600);
+            }, 3500);
         }
 
         function showResult(name, targetTimeStamp) {
